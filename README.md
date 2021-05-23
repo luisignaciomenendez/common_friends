@@ -33,7 +33,3 @@ connect_friends<-function(edgelist){
   
 }
 
-
-
-
-  g <- graph.data.frame(edgelist, directed = T)
