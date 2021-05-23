@@ -1,6 +1,6 @@
 # connect_friends
 Connect nodes by common friends in R
-
+```
 connect_friends<-function(edgelist){
   g <- graph.data.frame(edgelist, directed = T)
   g <- delete_vertices( g, 
