@@ -1,12 +1,13 @@
 # connect_friends
 Connect nodes by common friends in R
 
+```
 connect_friends<-function(edgelist){
   g <- graph.data.frame(edgelist, directed = T)
   g <- delete_vertices( g, 
                         (!V(g) %in% c(V(g)[[degree(g, mode = "in")>=2]])) & 
                           (!V(g) %in% c(V(g)[[degree(g, mode = "in")==0]])))
-  el <- as.data.frame(get.edgelist(g))
+ el <- as.data.frame(get.edgelist(g))
   ids <- unique(c(el$V1, el$V2))
   
   y <- lapply(ids, function(id) {
@@ -34,3 +35,5 @@ connect_friends<-function(edgelist){
 
 
 
+
+  g <- graph.data.frame(edgelist, directed = T)
