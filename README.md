@@ -1,35 +1,44 @@
 # connect_friends
 Connect nodes by common friends in R
 
-```
-connect_friends<-function(edgelist){
-  g <- graph.data.frame(edgelist, directed = T)
-  g <- delete_vertices( g, 
-                        (!V(g) %in% c(V(g)[[degree(g, mode = "in")>=2]])) & 
-                          (!V(g) %in% c(V(g)[[degree(g, mode = "in")==0]])))
- el <- as.data.frame(get.edgelist(g))
-  ids <- unique(c(el$V1, el$V2))
+Given an edgelist of nodes (directed), the function connects nodes if they share a common friend.
+
+# Example:
+
+<details open="open">
+  <summary><h2 style="display: inline-block">Load the edgelist </h2></summary>
+
+  `edgelist <- read.table(text = "
+                       A C
+                       B C
+                       D C
+                       E F
+                       G F
+                       H F
+                       I J
+                       I K")`
+
+`g <- graph.data.frame(edgelist, directed = T)`
   
-  y <- lapply(ids, function(id) {
-    
-    x <- el[which(el$V1 == id | el$V2 == id),]
-    alt_nodes <- setdiff(unique(c(x$V1, x$V2)), id)
-    
-  })
+
+  <img src="https://user-images.githubusercontent.com/62380208/119257911-b6853000-bbc7-11eb-8d02-2d26253fcaf7.png" width="200" height="200"/>
   
-  if(length(y)==0) {
-    stop("No common friends found")
-  }
-  ne2=NULL
-  ne=NULL
-  for (i in 1:length(y)) {
-    new_edge <- y[[i]]
-    if (length(new_edge)>=2){
-      ne <- t(combn(new_edge,2))
-    }
-    ne2 <- rbind(ne,ne2)
-  }
-  g2  <<-  graph.data.frame(ne2, directed  =  F)
   
-}
+  In this case we would like nodes A,B,D and G,H,E to be connected as they share a common friend.
+  
+
+
+<details open="open">
+  <summary><h2 style="display: inline-block">Use function </h2></summary>
+
+`connect_friends(edgelist)`
+
+`plot(simplify(g2),edge.arrow.size=0.01,vertex.size=3,
+     display.isolates=FALSE,vertex.label=NA)`
+  
+
+  <img src="https://user-images.githubusercontent.com/62380208/119257938-db79a300-bbc7-11eb-8e1b-3a0806b66951.png" width="200" height="200"/>
+
+
+
 
